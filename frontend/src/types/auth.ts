@@ -34,7 +34,13 @@ export interface RegisterCredentials {
 
 export interface AuthResponse extends User { }
 
+export interface BackendErrorDetail {
+    message: string
+    code: string
+    index: number
+}
+
 export interface ApiError {
     error?: string
-    errors?: string[]
+    errors?: BackendErrorDetail[]
 }
