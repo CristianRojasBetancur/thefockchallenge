@@ -1,0 +1,15 @@
+interface XLogoProps {
+    className?: string
+}
+
+/**
+ * The X (formerly Twitter) logo as an inline SVG.
+ * Use className to control size and colour.
+ */
+export function XLogo({ className = 'h-10 w-10 fill-white' }: XLogoProps) {
+    return (
+        <svg viewBox="0 0 24 24" aria-hidden="true" className={className}>
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.747l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+        </svg>
+    )
+}
