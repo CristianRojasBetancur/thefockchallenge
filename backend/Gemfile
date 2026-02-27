@@ -56,3 +56,5 @@ group :development do
   # Auto-annotate models with schema comments (Ruby 3+ compatible fork of annotate)
   gem "annotaterb"
 end
+
+gem "scalar_ruby", "~> 1.1"

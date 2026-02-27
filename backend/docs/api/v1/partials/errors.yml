@@ -1,0 +1,68 @@
+---
+:schemas:
+  :ErrorItem:
+    :type: object
+    :properties:
+      :message:
+        :type: string
+        :example: El correo ya está en uso
+      :code:
+        :type: string
+        :example: '42200'
+      :index:
+        :type: integer
+        :example: 0
+    :required:
+    - message
+    - code
+    - index
+  :ErrorResponse:
+    :type: object
+    :properties:
+      :errors:
+        :type: array
+        :items:
+          :$ref: "#/components/schemas/ErrorItem"
+    :required:
+    - errors
+  :LegacyErrorResponse:
+    :type: object
+    :properties:
+      :errors:
+        :type: array
+        :items:
+          :type: string
+          :example: El nombre no puede estar en blanco
+    :required:
+    - errors
+:responses:
+  :UnauthorizedError:
+    :description: No autorizado
+    :content:
+      :application/json:
+        :schema:
+          :$ref: "#/components/schemas/ErrorResponse"
+        :example:
+          :errors:
+          - :message: Credenciales inválidas
+            :code: '40101'
+            :index: 0
+  :NotFoundError:
+    :description: No encontrado
+    :content:
+      :application/json:
+        :schema:
+          :$ref: "#/components/schemas/ErrorResponse"
+        :example:
+          :errors:
+          - :message: Recurso no encontrado
+            :code: '40400'
+            :index: 0
+  :UnprocessableEntityError:
+    :description: Entidad no procesable. Error de validación.
+    :content:
+      :application/json:
+        :schema:
+          :oneOf:
+          - :$ref: "#/components/schemas/ErrorResponse"
+          - :$ref: "#/components/schemas/LegacyErrorResponse"

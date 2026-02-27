@@ -1,0 +1,62 @@
+---
+:schemas:
+  :User:
+    :type: object
+    :properties:
+      :id:
+        :type: integer
+        :example: 1
+      :email:
+        :type: string
+        :example: user@example.com
+      :username:
+        :type: string
+        :example: user123
+      :handle:
+        :type: string
+        :example: "@user123"
+      :name:
+        :type: string
+        :nullable: true
+        :example: John Doe
+      :bio:
+        :type: string
+        :nullable: true
+        :example: Hola Mundo
+      :location:
+        :type: string
+        :nullable: true
+        :example: Nueva York
+      :website:
+        :type: string
+        :nullable: true
+        :example: https://example.com
+      :date_of_birth:
+        :type: string
+        :format: date
+        :nullable: true
+        :example: '1990-01-01'
+      :verified:
+        :type: boolean
+        :example: false
+      :followers_count:
+        :type: integer
+        :example: 0
+      :following_count:
+        :type: integer
+        :example: 0
+      :tweets_count:
+        :type: integer
+        :example: 0
+      :avatar_url:
+        :type: string
+        :nullable: true
+        :example: http://localhost:3000/rails/active_storage/blobs/...
+      :banner_url:
+        :type: string
+        :nullable: true
+        :example:
+      :created_at:
+        :type: string
+        :format: date-time
+        :example: '2023-01-01T00:00:00Z'

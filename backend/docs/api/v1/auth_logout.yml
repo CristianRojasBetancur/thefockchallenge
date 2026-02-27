@@ -1,0 +1,19 @@
+---
+"/auth/logout":
+  :delete:
+    :summary: Cerrar sesión
+    :tags:
+    - Auth
+    :responses:
+      :200:
+        :description: Cierre de sesión exitoso
+        :content:
+          :application/json:
+            :schema:
+              :type: object
+              :properties:
+                :message:
+                  :type: string
+                  :example: Sesión cerrada exitosamente
+      :401:
+        :$ref: "#/components/responses/UnauthorizedError"

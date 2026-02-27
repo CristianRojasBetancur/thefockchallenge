@@ -1,0 +1,51 @@
+---
+"/auth/register":
+  :post:
+    :summary: Registrar un nuevo usuario
+    :tags:
+    - Auth
+    :description: Crea un nuevo usuario. Se utiliza JWT con cookies encriptadas.
+    :requestBody:
+      :required: true
+      :content:
+        :application/json:
+          :schema:
+            :type: object
+            :properties:
+              :user:
+                :type: object
+                :required:
+                - email
+                - username
+                - handle
+                - password
+                - password_confirmation
+                :properties:
+                  :email:
+                    :type: string
+                    :format: email
+                  :username:
+                    :type: string
+                  :handle:
+                    :type: string
+                  :name:
+                    :type: string
+                  :password:
+                    :type: string
+                    :format: password
+                  :password_confirmation:
+                    :type: string
+                    :format: password
+                  :date_of_birth:
+                    :type: string
+                    :format: date
+    :responses:
+      :201:
+        :description: Usuario creado exitosamente
+        :content:
+          :application/json:
+            :schema:
+              :$ref: "#/components/schemas/User"
+      :422:
+        :$ref: "#/components/responses/UnprocessableEntityError"
+    :description: Crea un nuevo usuario. Se utiliza JWT con cookies encriptadas.
