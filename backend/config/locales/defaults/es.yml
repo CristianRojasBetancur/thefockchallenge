@@ -6,6 +6,13 @@ es:
         restrict_dependent_destroy:
           has_one: No se puede eliminar el registro porque existe un %{record} dependiente
           has_many: No se puede eliminar el registro porque existen %{record} dependientes
+      models:
+        user:
+          attributes:
+            username:
+              invalid: solo letras, números y guiones bajos
+            handle:
+              invalid: solo letras, números y guiones bajos
   grammar:
     articles:
       one:
@@ -232,3 +239,23 @@ es:
       long: "%A, %d de %B de %Y a las %I:%M %p"
       short: "%d de %b a las %H:%M hrs"
     pm: pm
+  domain:
+    errors:
+      keys: {}
+      authentication:
+        invalid_credentials:
+          message: Correo o contraseña incorrectos
+          code: "40101"
+        invalid_token:
+          message: Token de autenticación inválido
+          code: "40102"
+        token_expired:
+          message: El token de autenticación ha expirado
+          code: "40103"
+        user_not_found:
+          message: Usuario autenticado no encontrado
+          code: "40104"
+      generic:
+        internal_server_error:
+          message: Error interno del servidor
+          code: "50001"

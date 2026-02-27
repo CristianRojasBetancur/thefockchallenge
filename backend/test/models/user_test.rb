@@ -19,7 +19,7 @@ class UserTest < ActiveSupport::TestCase
   test "requires email" do
     user = User.new(valid_attributes.merge(email: ""))
     refute user.valid?
-    assert_includes user.errors[:email], "can't be blank"
+    assert_includes user.errors[:email], "no puede estar en blanco"
   end
 
   test "rejects malformed email" do

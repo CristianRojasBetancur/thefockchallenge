@@ -7,13 +7,10 @@ module Auth
     # POST /auth/register
     def create
       user = User.new(registration_params)
+      user.save!
 
-      if user.save
-        cookie_store.write(user.generate_jwt)
-        render json: UserSerializer.new(user).as_json, status: :created
-      else
-        render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
-      end
+      cookie_store.write(user.generate_jwt)
+      render json: UserSerializer.new(user).as_json, status: :created
     end
 
     private
