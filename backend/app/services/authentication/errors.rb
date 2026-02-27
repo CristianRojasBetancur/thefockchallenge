@@ -2,23 +2,42 @@
 
 module Authentication
   module Errors
-    class Base < StandardError; end
+    # Convenience alias so existing references still resolve.
+    Base = Authorization::BaseAuthorizationError
+
+    class InvalidCredentials < Base
+      PATH = "domain.errors.authentication.invalid_credentials"
+
+      def initialize(details = {})
+        attrs = ErrorMessageBuilder.build(path: PATH, details:)
+        super(**attrs)
+      end
+    end
 
     class InvalidToken < Base
-      def initialize(msg = "Invalid authentication token")
-        super
+      PATH = "domain.errors.authentication.invalid_token"
+
+      def initialize(details = {})
+        attrs = ErrorMessageBuilder.build(path: PATH, details:)
+        super(**attrs)
       end
     end
 
     class TokenExpired < Base
-      def initialize(msg = "Authentication token has expired")
-        super
+      PATH = "domain.errors.authentication.token_expired"
+
+      def initialize(details = {})
+        attrs = ErrorMessageBuilder.build(path: PATH, details:)
+        super(**attrs)
       end
     end
 
     class UserNotFound < Base
-      def initialize(msg = "Authenticated user not found")
-        super
+      PATH = "domain.errors.authentication.user_not_found"
+
+      def initialize(details = {})
+        attrs = ErrorMessageBuilder.build(path: PATH, details:)
+        super(**attrs)
       end
     end
   end

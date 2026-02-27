@@ -19,7 +19,7 @@ class JsonWebToken
     rescue JWT::ExpiredSignature
       raise Authentication::Errors::TokenExpired
     rescue JWT::DecodeError => e
-      raise Authentication::Errors::InvalidToken, e.message
+      raise Authentication::Errors::InvalidToken
     end
 
     private

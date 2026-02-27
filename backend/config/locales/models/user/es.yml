@@ -1,0 +1,18 @@
+es:
+  activerecord:
+    models:
+      user: Usuario
+    attributes:
+      user:
+        email: Correo electrónico
+        username: Nombre de usuario
+        handle: Apodo
+        name: Nombre
+        password: Contraseña
+        password_confirmation: Confirmación de contraseña
+        bio: Biografía
+        location: Ubicación
+        website: Sitio web
+        date_of_birth: Fecha de nacimiento
+        avatar: Foto de perfil
+        banner: Imagen de portada

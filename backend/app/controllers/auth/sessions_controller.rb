@@ -9,8 +9,7 @@ module Auth
       user = User.find_by(email: login_params[:email]&.downcase&.strip)
 
       unless user&.authenticate(login_params[:password])
-        return render json: { error: "Invalid email or password" },
-                      status: :unauthorized
+        raise Authentication::Errors::InvalidCredentials
       end
 
       cookie_store.write(user.generate_jwt)
