@@ -1,0 +1,23 @@
+es:
+  activerecord:
+    models:
+      tweet: Tweet
+    attributes:
+      tweet:
+        content: Contenido
+    errors:
+      models:
+        tweet:
+          attributes:
+            content:
+              blank: no puede estar en blanco
+              too_long: es demasiado largo (máximo %{count} caracteres)
+  domain:
+    errors:
+      tweets:
+        not_found:
+          message: El tweet no se encontró
+          code: "40401"
+        forbidden:
+          message: No tienes permisos para eliminar este tweet
+          code: "40301"

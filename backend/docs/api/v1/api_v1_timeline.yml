@@ -1,0 +1,31 @@
+---
+"/api/v1/timeline":
+  :get:
+    :summary: Obtener timeline
+    :tags:
+    - Timeline
+    :parameters:
+    - :name: page
+      :in: query
+      :description: Número de página
+      :schema:
+        :type: integer
+        :default: 1
+    - :name: limit
+      :in: query
+      :description: Cantidad de tweets por página
+      :schema:
+        :type: integer
+        :default: 10
+    :responses:
+      :200:
+        :description: Lista de tweets del usuario y las personas que sigue
+        :content:
+          :application/json:
+            :schema:
+              :type: array
+              :items:
+                :$ref: "#/components/schemas/Tweet"
+      :401:
+        :$ref: "#/components/responses/UnauthorizedError"
+    :description: Retorna los tweets del usuario actual y de los usuarios que sigue, ordenados de forma descendente.

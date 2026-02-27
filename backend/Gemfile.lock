@@ -100,6 +100,24 @@ GEM
       reline (>= 0.3.8)
     dotenv (3.2.0)
     drb (2.2.3)
+    dry-core (1.2.0)
+      concurrent-ruby (~> 1.0)
+      logger
+      zeitwerk (~> 2.6)
+    dry-events (1.1.0)
+      concurrent-ruby (~> 1.0)
+      dry-core (~> 1.1)
+    dry-matcher (1.0.0)
+      dry-core (~> 1.0, < 2)
+    dry-monads (1.9.0)
+      concurrent-ruby (~> 1.0)
+      dry-core (~> 1.1)
+      zeitwerk (~> 2.6)
+    dry-transaction (0.16.0)
+      dry-core (~> 1.0)
+      dry-events (~> 1.0)
+      dry-matcher (~> 1.0)
+      dry-monads (~> 1.6)
     ed25519 (1.4.0)
     erb (6.0.2)
     erubi (1.13.1)
@@ -356,6 +374,8 @@ DEPENDENCIES
   brakeman
   bundler-audit
   debug
+  dry-monads (~> 1.9)
+  dry-transaction (~> 0.16.0)
   image_processing (~> 1.2)
   jbuilder
   jwt (~> 2.9)

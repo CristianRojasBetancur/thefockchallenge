@@ -1,0 +1,57 @@
+---
+"/api/v1/tweets":
+  :post:
+    :summary: Crear un tweet
+    :tags:
+    - Tweets
+    :requestBody:
+      :required: true
+      :content:
+        :application/json:
+          :schema:
+            :type: object
+            :properties:
+              :tweet:
+                :type: object
+                :required:
+                - content
+                :properties:
+                  :content:
+                    :type: string
+                    :maxLength: 280
+                    :example: "Hola, este es un nuevo tweet."
+    :responses:
+      :201:
+        :description: Tweet creado exitosamente
+        :content:
+          :application/json:
+            :schema:
+              :$ref: "#/components/schemas/Tweet"
+      :401:
+        :$ref: "#/components/responses/UnauthorizedError"
+      :422:
+        :$ref: "#/components/responses/UnprocessableEntityError"
+    :description: Crea un nuevo tweet para el usuario autenticado.
+
+"/api/v1/tweets/{id}":
+  :delete:
+    :summary: Eliminar un tweet
+    :tags:
+    - Tweets
+    :parameters:
+    - :name: id
+      :in: path
+      :required: true
+      :description: ID del tweet a eliminar
+      :schema:
+        :type: integer
+    :responses:
+      :204:
+        :description: Tweet eliminado exitosamente
+      :401:
+        :$ref: "#/components/responses/UnauthorizedError"
+      :403:
+        :$ref: "#/components/responses/ForbiddenError"
+      :404:
+        :$ref: "#/components/responses/NotFoundError"
+    :description: Elimina un tweet si el usuario actual es el propietario.

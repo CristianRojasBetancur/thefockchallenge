@@ -9,5 +9,4 @@ class BaseError < StandardError
       super(message)
       @code = code.to_s
     end
-  end
-
+end

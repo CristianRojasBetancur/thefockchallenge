@@ -1,0 +1,21 @@
+---
+:schemas:
+  :Tweet:
+    :type: object
+    :properties:
+      :id:
+        :type: integer
+        :example: 1
+      :content:
+        :type: string
+        :example: "This is a new tweet!"
+      :user:
+        :$ref: "#/components/schemas/User"
+      :created_at:
+        :type: string
+        :format: date-time
+        :example: '2023-01-01T00:00:00Z'
+      :updated_at:
+        :type: string
+        :format: date-time
+        :example: '2023-01-01T00:00:00Z'

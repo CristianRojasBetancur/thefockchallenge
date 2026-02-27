@@ -1,0 +1,1 @@
+# Empty fixture file to prevent foreign key errors since we use explicit setup in tests

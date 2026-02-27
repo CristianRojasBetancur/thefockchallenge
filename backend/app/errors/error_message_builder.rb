@@ -23,5 +23,4 @@ class ErrorMessageBuilder
 
       { message: message, code: code.to_s }
     end
-  end
-
+end
