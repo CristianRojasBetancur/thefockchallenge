@@ -15,6 +15,15 @@ Rails.application.routes.draw do
         delete :avatar, on: :member, action: :destroy_avatar
         delete :banner, on: :member, action: :destroy_banner
       end
+
+      resources :tweets, only: %i[create destroy]
+      get :timeline, to: "timelines#index"
+
+      resources :users, only: [] do
+        resource :follow, only: %i[create destroy]
+        get :followers, to: "follows#followers"
+        get :following, to: "follows#following"
+      end
     end
   end
 end

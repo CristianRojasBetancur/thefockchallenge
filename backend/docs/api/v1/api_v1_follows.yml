@@ -1,0 +1,118 @@
+---
+"/api/v1/users/{user_id}/follow":
+  :post:
+    :summary: Seguir a un usuario
+    :tags:
+    - Follows
+    :parameters:
+    - :name: user_id
+      :in: path
+      :required: true
+      :description: ID o username del usuario a seguir
+      :schema:
+        :type: string
+    :responses:
+      :201:
+        :description: Seguido exitosamente
+      :401:
+        :$ref: "#/components/responses/UnauthorizedError"
+      :404:
+        :$ref: "#/components/responses/NotFoundError"
+      :422:
+        :$ref: "#/components/responses/UnprocessableEntityError"
+    :description: Permite al usuario autenticado seguir a otro usuario.
+  :delete:
+    :summary: Dejar de seguir a un usuario
+    :tags:
+    - Follows
+    :parameters:
+    - :name: user_id
+      :in: path
+      :required: true
+      :description: ID o username del usuario a dejar de seguir
+      :schema:
+        :type: string
+    :responses:
+      :204:
+        :description: Dejado de seguir exitosamente
+      :401:
+        :$ref: "#/components/responses/UnauthorizedError"
+      :404:
+        :$ref: "#/components/responses/NotFoundError"
+    :description: Permite al usuario autenticado dejar de seguir a otro usuario (incluyendo retorno 204 si ya no lo seguía).
+
+"/api/v1/users/{user_id}/followers":
+  :get:
+    :summary: Obtener lista de seguidores
+    :tags:
+    - Follows
+    :parameters:
+    - :name: user_id
+      :in: path
+      :required: true
+      :description: ID o username del usuario
+      :schema:
+        :type: string
+    - :name: page
+      :in: query
+      :description: Número de página
+      :schema:
+        :type: integer
+        :default: 1
+    - :name: limit
+      :in: query
+      :description: Cantidad de usuarios por página
+      :schema:
+        :type: integer
+        :default: 20
+    :responses:
+      :200:
+        :description: Lista de seguidores
+        :content:
+          :application/json:
+            :schema:
+              :type: array
+              :items:
+                :$ref: "#/components/schemas/User"
+      :401:
+        :$ref: "#/components/responses/UnauthorizedError"
+      :404:
+        :$ref: "#/components/responses/NotFoundError"
+
+"/api/v1/users/{user_id}/following":
+  :get:
+    :summary: Obtener lista de seguidos
+    :tags:
+    - Follows
+    :parameters:
+    - :name: user_id
+      :in: path
+      :required: true
+      :description: ID o username del usuario
+      :schema:
+        :type: string
+    - :name: page
+      :in: query
+      :description: Número de página
+      :schema:
+        :type: integer
+        :default: 1
+    - :name: limit
+      :in: query
+      :description: Cantidad de usuarios por página
+      :schema:
+        :type: integer
+        :default: 20
+    :responses:
+      :200:
+        :description: Lista de gente que sigue el usuario
+        :content:
+          :application/json:
+            :schema:
+              :type: array
+              :items:
+                :$ref: "#/components/schemas/User"
+      :401:
+        :$ref: "#/components/responses/UnauthorizedError"
+      :404:
+        :$ref: "#/components/responses/NotFoundError"

@@ -1,0 +1,22 @@
+es:
+  activerecord:
+    models:
+      follow: Seguidor
+    attributes:
+      follow:
+        follower_id: Seguidor
+        followed_id: Seguido
+    errors:
+      models:
+        follow:
+          attributes:
+            follower_id:
+              already_following: ya sigues a este usuario
+            base:
+              cannot_follow_self: no puedes seguirte a ti mismo
+  domain:
+    errors:
+      follows:
+        not_found:
+          message: El usuario no se encontró
+          code: "40402"

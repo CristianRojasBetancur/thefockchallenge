@@ -16,4 +16,3 @@ module Authorization
   #   end
   class BaseAuthorizationError < BaseError; end
 end
-

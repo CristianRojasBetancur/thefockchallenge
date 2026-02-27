@@ -16,4 +16,3 @@ module Domain
   #   end
   class BaseDomainError < BaseError; end
 end
-

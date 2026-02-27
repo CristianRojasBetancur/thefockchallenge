@@ -1,0 +1,23 @@
+en:
+  activerecord:
+    models:
+      tweet: Tweet
+    attributes:
+      tweet:
+        content: Content
+    errors:
+      models:
+        tweet:
+          attributes:
+            content:
+              blank: can't be blank
+              too_long: is too long (maximum %{count} characters)
+  domain:
+    errors:
+      tweets:
+        not_found:
+          message: Tweet not found
+          code: "40401"
+        forbidden:
+          message: You are not authorized to delete this tweet
+          code: "40301"
