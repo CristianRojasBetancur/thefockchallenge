@@ -1,0 +1,21 @@
+---
+"/api/v1/profile/banner":
+  :delete:
+    :summary: Eliminar el banner del usuario
+    :tags:
+    - Profile
+    :security:
+    - :bearerAuth: []
+    :responses:
+      :200:
+        :description: Banner eliminado exitosamente
+        :content:
+          :application/json:
+            :schema:
+              :type: object
+              :properties:
+                :message:
+                  :type: string
+                  :example: Banner eliminado
+      :401:
+        :$ref: "#/components/responses/UnauthorizedError"

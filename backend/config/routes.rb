@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  mount Scalar::UI, at: "/docs"
+
   get "up" => "rails/health#show", as: :rails_health_check
 
   namespace :auth do
