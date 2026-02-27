@@ -55,18 +55,16 @@ export function RegisterPage() {
         } catch (err) {
             if (err instanceof ApiRequestError) {
                 const body = err.body as ApiError
-                if (body.errors) {
-                    // Parse Rails validation messages e.g. "Email has already been taken"
+                if (body.errors && body.errors.length > 0) {
+                    const firstError = body.errors[0].message
                     const parsed: FieldErrors = {}
-                    const remaining: string[] = []
-                    body.errors.forEach((msg) => {
-                        if (/email/i.test(msg)) { parsed.email = msg; return }
-                        if (/username/i.test(msg)) { parsed.username = msg; return }
-                        if (/password/i.test(msg)) { parsed.password = msg; return }
-                        remaining.push(msg)
-                    })
+
+                    if (/email/i.test(firstError)) { parsed.email = firstError }
+                    else if (/username/i.test(firstError)) { parsed.username = firstError }
+                    else if (/password/i.test(firstError)) { parsed.password = firstError }
+                    else { setGlobalError(firstError) }
+
                     setFieldErrors(parsed)
-                    if (remaining.length) setGlobalError(remaining.join(' '))
                 } else {
                     setGlobalError(body.error ?? 'Registration failed. Please try again.')
                 }

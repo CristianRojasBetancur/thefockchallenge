@@ -28,7 +28,11 @@ export function LoginPage() {
         } catch (err) {
             if (err instanceof ApiRequestError) {
                 const body = err.body as ApiError
-                setGlobalError(body.error ?? 'Something went wrong. Please try again.')
+                if (body.errors && body.errors.length > 0) {
+                    setGlobalError(body.errors[0].message)
+                } else {
+                    setGlobalError(body.error ?? 'Something went wrong. Please try again.')
+                }
             } else {
                 setGlobalError('A network error occurred. Please check your connection.')
             }
