@@ -1,0 +1,14 @@
+es:
+  activerecord:
+    models:
+      like: Me gusta
+    attributes:
+      like:
+        user: Usuario
+        tweet: Tweet
+    errors:
+      models:
+        like:
+          attributes:
+            user_id:
+              taken: "ya dio me gusta a este tweet"

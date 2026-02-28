@@ -3,7 +3,7 @@
   :post:
     :summary: Crear un tweet
     :tags:
-    - Tweets
+      - Tweets
     :requestBody:
       :required: true
       :content:
@@ -14,7 +14,7 @@
               :tweet:
                 :type: object
                 :required:
-                - content
+                  - content
                 :properties:
                   :content:
                     :type: string
@@ -37,14 +37,14 @@
   :delete:
     :summary: Eliminar un tweet
     :tags:
-    - Tweets
+      - Tweets
     :parameters:
-    - :name: id
-      :in: path
-      :required: true
-      :description: ID del tweet a eliminar
-      :schema:
-        :type: integer
+      - :name: id
+        :in: path
+        :required: true
+        :description: ID del tweet a eliminar
+        :schema:
+          :type: integer
     :responses:
       :204:
         :description: Tweet eliminado exitosamente
@@ -55,3 +55,88 @@
       :404:
         :$ref: "#/components/responses/NotFoundError"
     :description: Elimina un tweet si el usuario actual es el propietario.
+
+"/api/v1/tweets/for_you":
+  :get:
+    :summary: Obtener timeline global (Para ti)
+    :tags:
+      - Tweets
+    :parameters:
+      - :name: page
+        :in: query
+        :description: Número de página
+        :schema:
+          :type: integer
+          :default: 1
+      - :name: limit
+        :in: query
+        :description: Cantidad de tweets por página
+        :schema:
+          :type: integer
+          :default: 10
+    :responses:
+      :200:
+        :description: Lista global de tweets
+        :content:
+          :application/json:
+            :schema:
+              :type: array
+              :items:
+                :$ref: "#/components/schemas/Tweet"
+      :401:
+        :$ref: "#/components/responses/UnauthorizedError"
+    :description: Retorna los tweets de todos los usuarios de la plataforma ordenados de forma descendente.
+
+"/api/v1/tweets/{tweet_id}/like":
+  :post:
+    :summary: Dar me gusta a un tweet
+    :tags:
+      - Tweets
+    :parameters:
+      - :name: tweet_id
+        :in: path
+        :required: true
+        :description: ID del tweet
+        :schema:
+          :type: integer
+    :responses:
+      :200:
+        :description: Tweet con me gusta actualizado (idempotente)
+        :content:
+          :application/json:
+            :schema:
+              :$ref: "#/components/schemas/Tweet"
+      :201:
+        :description: Me gusta creado exitosamente
+        :content:
+          :application/json:
+            :schema:
+              :$ref: "#/components/schemas/Tweet"
+      :401:
+        :$ref: "#/components/responses/UnauthorizedError"
+      :404:
+        :$ref: "#/components/responses/NotFoundError"
+    :description: Agrega un me gusta al tweet por parte del usuario autenticado.
+  :delete:
+    :summary: Quitar me gusta de un tweet
+    :tags:
+      - Tweets
+    :parameters:
+      - :name: tweet_id
+        :in: path
+        :required: true
+        :description: ID del tweet
+        :schema:
+          :type: integer
+    :responses:
+      :200:
+        :description: Tweet sin me gusta (idempotente)
+        :content:
+          :application/json:
+            :schema:
+              :$ref: "#/components/schemas/Tweet"
+      :401:
+        :$ref: "#/components/responses/UnauthorizedError"
+      :404:
+        :$ref: "#/components/responses/NotFoundError"
+    :description: Elimina un me gusta dado previamente a un tweet por parte del usuario autenticado.

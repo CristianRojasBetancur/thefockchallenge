@@ -1,0 +1,14 @@
+en:
+  activerecord:
+    models:
+      like: Like
+    attributes:
+      like:
+        user: User
+        tweet: Tweet
+    errors:
+      models:
+        like:
+          attributes:
+            user_id:
+              taken: "has already liked this tweet"
