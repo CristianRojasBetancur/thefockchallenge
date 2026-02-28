@@ -1,9 +1,12 @@
 import { FollowsList } from '../components/FollowsList'
 import { useAuth } from '../hooks/useAuth'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 export function FollowPage() {
+    usePageTitle('Follow')
+
     const { user } = useAuth()
-    
+
     // We reuse the FollowsList component, which fetches followers/following 
     // or maybe we can just make it show "who to follow". The requirement says
     // "Follow -> list of users to follow". Let's use the suggestions approach if we had one.
@@ -18,7 +21,7 @@ export function FollowPage() {
             <div className="sticky top-0 z-10 bg-black/80 backdrop-blur-md border-b border-[#2f3336] p-4 text-white">
                 <h2 className="text-xl font-bold">Who to follow</h2>
             </div>
-            
+
             {user ? (
                 <div className="p-4">
                     <p className="text-[#71767b] mb-4">Users you might know or want to follow (Currently showing your connections)</p>

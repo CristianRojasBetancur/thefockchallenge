@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import type { User } from '../types/auth'
 import { fetchUserProfile } from '../api/users'
+import { usePageTitle } from '../hooks/usePageTitle'
 import { FollowsList } from '../components/FollowsList'
 
 export function ProfileFollowsPage() {
@@ -10,6 +11,8 @@ export function ProfileFollowsPage() {
     const location = useLocation()
     const [user, setUser] = useState<User | null>(null)
     const [isLoading, setIsLoading] = useState(true)
+
+    usePageTitle(user ? `People followed by ${user.name || user.username} (@${user.handle || user.username})` : 'Profile')
 
     // Sync tab with URL
     const activeTab = location.pathname.endsWith('/following') ? 'following' : 'followers'
@@ -42,7 +45,7 @@ export function ProfileFollowsPage() {
     return (
         <div className="flex flex-col w-full min-h-screen bg-black">
             <header className="sticky top-0 z-10 bg-black/80 backdrop-blur-md flex items-center gap-6 px-4 py-2 border-b border-[#2f3336]">
-                <button 
+                <button
                     onClick={() => navigate(`/profile/${user.username}`)}
                     className="p-2 rounded-full hover:bg-white/10 transition-colors"
                 >
@@ -57,7 +60,7 @@ export function ProfileFollowsPage() {
             </header>
 
             <nav className="flex border-b border-[#2f3336]">
-                <button 
+                <button
                     onClick={() => navigate(`/profile/${user.username}/followers`, { replace: true })}
                     className={`flex-1 hover:bg-white/10 transition-colors py-4 font-bold ${activeTab === 'followers' ? 'text-white' : 'text-[#71767b]'}`}
                 >
@@ -65,7 +68,7 @@ export function ProfileFollowsPage() {
                         Followers
                     </span>
                 </button>
-                <button 
+                <button
                     onClick={() => navigate(`/profile/${user.username}/following`, { replace: true })}
                     className={`flex-1 hover:bg-white/10 transition-colors py-4 font-bold ${activeTab === 'following' ? 'text-white' : 'text-[#71767b]'}`}
                 >

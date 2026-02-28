@@ -5,10 +5,8 @@ interface AvatarProps {
 }
 
 export function Avatar({ url, name, className = "" }: AvatarProps) {
-    // Use a generic placeholder if there is no avatar URL
-    // We use avatar.iran.liara.run to generate an avatar based on the name
-    // Encoding the name prevents issues with spaces or special characters
-    const placeholderUrl = `https://avatar.iran.liara.run/username?username=${encodeURIComponent(name)}`
+    // Use the default static avatar image as fallback
+    const placeholderUrl = '/images/default_avatar.jpg'
 
     const imgSrc = url || placeholderUrl
 

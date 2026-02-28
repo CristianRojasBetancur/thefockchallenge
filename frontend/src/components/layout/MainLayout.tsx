@@ -78,11 +78,11 @@ export function MainLayout({ children }: { children: ReactNode }) {
 
     return (
         <div className="min-h-screen bg-black flex justify-center w-full">
-            <div className="flex w-full max-w-[1265px] justify-between">
+            <div className="flex w-full max-w-[1265px] justify-center">
 
                 {/* Left Sidebar (Desktop/Tablet) */}
-                <header className="hidden sm:flex w-[68px] xl:w-[275px] shrink-0 border-r border-[#2f3336] p-2 flex-col justify-between items-center xl:items-start h-screen sticky top-0">
-                    <div className="w-full h-full flex flex-col justify-between overflow-y-auto">
+                <header className="hidden sm:flex w-[68px] xl:w-[275px] shrink-0 border-r border-[#2f3336] p-2 flex-col items-center xl:items-start h-screen sticky top-0 bg-black z-10">
+                    <div className="w-full flex-1 flex flex-col overflow-y-auto overflow-x-hidden pb-4">
                         <div className="flex flex-col items-center xl:items-start xl:w-full">
                             {/* X Logo */}
                             <Link to="/home" className="w-[50px] h-[50px] rounded-full hover:bg-white/[0.1] transition-colors flex items-center justify-center mb-2 xl:ml-2">
@@ -123,55 +123,55 @@ export function MainLayout({ children }: { children: ReactNode }) {
                                 </button>
                             </div>
                         </div>
-
-                        {/* Bottom User Area */}
-                        {user && (
-                            <div className="relative mt-4 w-full flex justify-center xl:justify-start">
-                                {/* Popover */}
-                                {isAccountMenuOpen && (
-                                    <>
-                                        {/* Invisible backdrop to close on click outside */}
-                                        <div className="fixed inset-0 z-40" onClick={() => setIsAccountMenuOpen(false)}></div>
-                                        <div className="absolute bottom-full left-0 mb-4 w-[300px] bg-black border border-[#2f3336] rounded-xl shadow-[0_0_15px_rgba(255,255,255,0.2)] py-3 z-50 flex flex-col font-bold text-[15px]">
-                                            <button
-                                                onClick={() => {
-                                                    setIsAccountMenuOpen(false)
-                                                    setIsAuthModalOpen(true)
-                                                }}
-                                                className="px-4 py-3 text-left text-white hover:bg-white/[0.03] transition-colors"
-                                            >
-                                                Add an existing account
-                                            </button>
-                                            <button
-                                                onClick={handleLogout}
-                                                className="px-4 py-3 text-left text-white hover:bg-white/[0.03] transition-colors"
-                                            >
-                                                Log out @{user.handle || user.username}
-                                            </button>
-                                        </div>
-                                    </>
-                                )}
-
-                                <button
-                                    onClick={() => setIsAccountMenuOpen(true)}
-                                    className="p-3 w-auto xl:w-full rounded-full hover:bg-white/[0.1] transition-colors flex items-center justify-center xl:justify-between mb-4 mt-auto"
-                                >
-                                    <div className="flex items-center gap-3 w-full">
-                                        <div className="w-10 h-10 rounded-full bg-[#333639] shrink-0 overflow-hidden flex items-center justify-center">
-                                            <Avatar url={user.avatar_url} name={user.name || user.username} />
-                                        </div>
-                                        <div className="hidden xl:flex flex-col items-start min-w-0 flex-1">
-                                            <span className="font-bold text-white truncate w-full text-left">{user.name || user.username}</span>
-                                            <span className={`${textClasses.muted} truncate -mt-1 w-full text-left`}>@{user.handle || user.username}</span>
-                                        </div>
-                                        <div className="hidden xl:block shrink-0">
-                                            <svg viewBox="0 0 24 24" aria-hidden="true" className="w-5 h-5 fill-white"><g><path d="M3 12c0-1.1.9-2 2-2s2 .9 2 2-.9 2-2 2-2-.9-2-2zm9 2c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm7 0c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"></path></g></svg>
-                                        </div>
-                                    </div>
-                                </button>
-                            </div>
-                        )}
                     </div>
+
+                    {/* Bottom User Area */}
+                    {user && (
+                        <div className="relative mt-auto pt-2 shrink-0 w-full flex justify-center xl:justify-start bg-black z-20">
+                            {/* Popover */}
+                            {isAccountMenuOpen && (
+                                <>
+                                    {/* Invisible backdrop to close on click outside */}
+                                    <div className="fixed inset-0 z-40" onClick={() => setIsAccountMenuOpen(false)}></div>
+                                    <div className="absolute bottom-full left-0 mb-4 w-[300px] bg-black border border-[#2f3336] rounded-xl shadow-[0_0_15px_rgba(255,255,255,0.2)] py-3 z-50 flex flex-col font-bold text-[15px]">
+                                        <button
+                                            onClick={() => {
+                                                setIsAccountMenuOpen(false)
+                                                setIsAuthModalOpen(true)
+                                            }}
+                                            className="px-4 py-3 text-left text-white hover:bg-white/[0.03] transition-colors"
+                                        >
+                                            Add an existing account
+                                        </button>
+                                        <button
+                                            onClick={handleLogout}
+                                            className="px-4 py-3 text-left text-white hover:bg-white/[0.03] transition-colors"
+                                        >
+                                            Log out @{user.handle || user.username}
+                                        </button>
+                                    </div>
+                                </>
+                            )}
+
+                            <button
+                                onClick={() => setIsAccountMenuOpen(true)}
+                                className="p-2 xl:p-3 w-[50px] xl:w-full rounded-full hover:bg-white/[0.1] transition-colors flex items-center justify-center xl:justify-between mb-4 mt-auto focus:outline-none"
+                            >
+                                <div className="flex items-center gap-3 w-full">
+                                    <div className="w-10 h-10 rounded-full bg-[#333639] shrink-0 overflow-hidden flex items-center justify-center">
+                                        <Avatar url={user.avatar_url} name={user.name || user.username} />
+                                    </div>
+                                    <div className="hidden xl:flex flex-col items-start min-w-0 flex-1">
+                                        <span className="font-bold text-white truncate w-full text-left">{user.name || user.username}</span>
+                                        <span className={`${textClasses.muted} truncate -mt-1 w-full text-left`}>@{user.handle || user.username}</span>
+                                    </div>
+                                    <div className="hidden xl:block shrink-0">
+                                        <svg viewBox="0 0 24 24" aria-hidden="true" className="w-5 h-5 fill-white"><g><path d="M3 12c0-1.1.9-2 2-2s2 .9 2 2-.9 2-2 2-2-.9-2-2zm9 2c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm7 0c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"></path></g></svg>
+                                    </div>
+                                </div>
+                            </button>
+                        </div>
+                    )}
                 </header>
 
                 {/* Main Feed Column */}

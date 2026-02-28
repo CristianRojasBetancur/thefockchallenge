@@ -105,6 +105,13 @@ paths:
           schema:
             type: integer
             default: 20
+        - name: filter
+          in: query
+          required: false
+          description: Filtro opcional ('likes' para mostrar solo tweets del usuario con likes)
+          schema:
+            type: string
+            enum: [likes]
       responses:
         "200":
           description: Lista de tweets / Tweets list
