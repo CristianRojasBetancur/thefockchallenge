@@ -9,10 +9,10 @@ User.where("email LIKE 'user%@example.com'").destroy_all
 ActiveRecord::Base.transaction do
   puts "Starting Seed Generation..."
 
-  Seeds::UsersSeeder.seed!(num_users: 100)
-  Seeds::TweetsSeeder.seed!(tweets_per_user_range: 3..10)
-  Seeds::FollowsSeeder.seed!(follows_per_user_range: 10..20)
-  Seeds::LikesSeeder.seed!(max_likes_per_user: 50)
+  Seeds::UsersSeeder.seed!(num_users: 20)
+  Seeds::TweetsSeeder.seed!(tweets_per_user_range: 2..5)
+  Seeds::FollowsSeeder.seed!(follows_per_user_range: 5..15)
+  Seeds::LikesSeeder.seed!(max_likes_per_user: 20)
 
   puts "Seed Generation Complete!"
 end
