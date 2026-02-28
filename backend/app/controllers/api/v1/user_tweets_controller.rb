@@ -8,7 +8,8 @@ module Api
         result = ::UserTweets::Fetcher.call(
           user_id: params[:id],
           page: params[:page],
-          limit: params[:limit]
+          limit: params[:limit],
+          filter: params[:filter]
         )
 
         if result.success?

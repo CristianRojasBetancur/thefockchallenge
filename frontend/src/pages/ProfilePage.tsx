@@ -215,10 +215,7 @@ export function ProfilePage() {
                             </div>
                         )}
                         {activeTab === 'likes' && (
-                            <div className="w-[80%] max-w-[400px]">
-                                <h1 className="text-[31px] font-extrabold text-white mb-2 leading-tight">No likes yet</h1>
-                                <p className="text-[15px] text-[#71767b]">When they like a post, it will show up here.</p>
-                            </div>
+                            <ProfileTweets username={user.username} filter="likes" />
                         )}
                     </div>
                 )}

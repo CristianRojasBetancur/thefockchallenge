@@ -5,9 +5,10 @@ import { TweetCard } from './TweetCard'
 
 interface ProfileTweetsProps {
     username: string
+    filter?: string
 }
 
-export function ProfileTweets({ username }: ProfileTweetsProps) {
+export function ProfileTweets({ username, filter }: ProfileTweetsProps) {
     const [tweets, setTweets] = useState<Tweet[]>([])
     const [, setPage] = useState(1)
     const [isLoading, setIsLoading] = useState(false)
@@ -18,10 +19,10 @@ export function ProfileTweets({ username }: ProfileTweetsProps) {
 
     const loadTweets = useCallback(async (pageNumber: number, currentHasMore: boolean) => {
         if (!currentHasMore && pageNumber !== 1) return
-        
+
         setIsLoading(true)
         try {
-            const data = await fetchUserTweets(username, pageNumber)
+            const data = await fetchUserTweets(username, pageNumber, filter)
             if (data.length === 0) {
                 setHasMore(false)
             } else {
@@ -46,7 +47,7 @@ export function ProfileTweets({ username }: ProfileTweetsProps) {
     const lastTweetElementRef = useCallback((node: HTMLDivElement | null) => {
         if (isLoading) return
         if (observer.current) observer.current.disconnect()
-        
+
         observer.current = new IntersectionObserver(entries => {
             if (entries[0].isIntersecting && hasMore) {
                 setPage(prevPage => {
@@ -56,7 +57,7 @@ export function ProfileTweets({ username }: ProfileTweetsProps) {
                 })
             }
         })
-        
+
         if (node) observer.current.observe(node)
     }, [isLoading, hasMore, loadTweets])
 
@@ -76,7 +77,7 @@ export function ProfileTweets({ username }: ProfileTweetsProps) {
             })
         }
     }
-    
+
     const [likingIds, setLikingIds] = useState<Set<number>>(new Set())
 
     const handleLikeToggle = async (id: number, currentIsLiked: boolean) => {
@@ -94,7 +95,7 @@ export function ProfileTweets({ username }: ProfileTweetsProps) {
         }))
 
         setLikingIds(prev => new Set(prev).add(id))
-        
+
         try {
             if (currentIsLiked) {
                 await unlikeTweet(id)
@@ -103,7 +104,7 @@ export function ProfileTweets({ username }: ProfileTweetsProps) {
             }
         } catch (error) {
             console.error('Failed to toggle like', error)
-            
+
             // Revert optimistic update on failure
             setTweets(prev => prev.map(tweet => {
                 if (tweet.id !== id) return tweet
@@ -135,9 +136,11 @@ export function ProfileTweets({ username }: ProfileTweetsProps) {
     if (tweets.length === 0) {
         return (
             <div className="p-8 text-center text-[#71767b]">
-                <h2 className="text-[31px] font-extrabold text-white mb-2 leading-tight">Here's a starting point</h2>
+                <h2 className="text-[31px] font-extrabold text-white mb-2 leading-tight">
+                    {filter === 'likes' ? 'No likes yet' : 'Here\'s a starting point'}
+                </h2>
                 <p className="text-[15px] max-w-[400px] mx-auto mb-6 leading-normal">
-                    When they post Tweets, they will show up here.
+                    {filter === 'likes' ? 'When they receive likes on their posts, they will show up here.' : 'When they post Tweets, they will show up here.'}
                 </p>
             </div>
         )
@@ -149,8 +152,8 @@ export function ProfileTweets({ username }: ProfileTweetsProps) {
                 const isLastItem = index === tweets.length - 1
                 return (
                     <div key={tweet.id} ref={isLastItem ? lastTweetElementRef : null}>
-                        <TweetCard 
-                            tweet={tweet} 
+                        <TweetCard
+                            tweet={tweet}
                             onDelete={handleDelete}
                             isDeleting={deletingIds.has(tweet.id)}
                             onLikeToggle={handleLikeToggle}

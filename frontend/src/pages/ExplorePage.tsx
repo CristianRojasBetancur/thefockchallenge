@@ -6,8 +6,11 @@ import { getExploreUsers } from '../api/users'
 import { followUser, unfollowUser } from '../api/follows'
 import type { User } from '../types/auth'
 import { useAuth } from '../hooks/useAuth'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 export function ExplorePage() {
+    usePageTitle('Explore')
+
     const { user: currentUser } = useAuth()
     const [users, setUsers] = useState<User[]>([])
     const [isLoading, setIsLoading] = useState(true)
@@ -46,7 +49,7 @@ export function ExplorePage() {
             }
         } catch (error) {
             console.error('Failed to toggle follow status', error)
-            
+
             // Revert optimistic update on failure
             setUsers(prev => prev.map(user => {
                 if (user.id !== userId) return user
@@ -67,10 +70,10 @@ export function ExplorePage() {
             <div className="sticky top-0 z-10 bg-black/80 backdrop-blur-md border-b border-[#2f3336] p-3">
                 <SearchBar />
             </div>
-            
+
             <div className="flex-1">
                 <h1 className={`${textClasses.heading} p-4 border-b border-[#2f3336]`}>Who to follow</h1>
-                
+
                 {isLoading ? (
                     <div className="flex justify-center p-8">
                         <div className="w-8 h-8 rounded-full border-4 border-[#1d9bf0] border-t-transparent animate-spin" />
@@ -83,9 +86,9 @@ export function ExplorePage() {
                 ) : (
                     <div className="flex flex-col pb-20">
                         {exploreUsers.map((user) => (
-                            <UserCard 
-                                key={user.id} 
-                                user={user} 
+                            <UserCard
+                                key={user.id}
+                                user={user}
                                 onFollowToggle={handleFollowToggle}
                             />
                         ))}

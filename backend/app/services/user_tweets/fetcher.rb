@@ -14,8 +14,9 @@ module UserTweets
       page = [ (input[:page] || 1).to_i, 1 ].max
       limit = [ (input[:limit] || 20).to_i, 100 ].min
       offset = (page - 1) * limit
+      filter = input[:filter]
 
-      Success(user_id:, offset:, limit:)
+      Success(user_id:, offset:, limit:, filter:)
     end
 
     def query_tweets(input)
@@ -26,9 +27,14 @@ module UserTweets
 
       tweets = Tweet.includes(:user)
                     .where(user_id: user.id)
-                    .order(created_at: :desc)
-                    .limit(input[:limit])
-                    .offset(input[:offset])
+      
+      if input[:filter] == 'likes'
+        tweets = tweets.where('likes_count > 0')
+      end
+
+      tweets = tweets.order(created_at: :desc)
+                     .limit(input[:limit])
+                     .offset(input[:offset])
 
       Success(tweets)
     end

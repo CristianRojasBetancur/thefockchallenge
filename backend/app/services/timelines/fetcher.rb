@@ -19,7 +19,7 @@ module Timelines
 
     def query_tweets(input)
       current_user = input[:current_user]
-      user_ids = [ current_user.id ] + current_user.following.pluck(:id)
+      user_ids = current_user.following.pluck(:id)
 
       tweets = Tweet.includes(:user)
                     .where(user_id: user_ids)
