@@ -80,8 +80,8 @@ export function MainLayout({ children }: { children: ReactNode }) {
         <div className="min-h-screen bg-black flex justify-center w-full">
             <div className="flex w-full max-w-[1265px] justify-between">
 
-                {/* Left Sidebar */}
-                <header className="w-[68px] xl:w-[275px] shrink-0 border-r border-[#2f3336] p-2 flex flex-col justify-between items-center xl:items-start h-screen sticky top-0">
+                {/* Left Sidebar (Desktop/Tablet) */}
+                <header className="hidden sm:flex w-[68px] xl:w-[275px] shrink-0 border-r border-[#2f3336] p-2 flex-col justify-between items-center xl:items-start h-screen sticky top-0">
                     <div className="w-full h-full flex flex-col justify-between overflow-y-auto">
                         <div className="flex flex-col items-center xl:items-start xl:w-full">
                             {/* X Logo */}
@@ -175,9 +175,46 @@ export function MainLayout({ children }: { children: ReactNode }) {
                 </header>
 
                 {/* Main Feed Column */}
-                <main className="flex-1 max-w-[600px] border-r border-[#2f3336] min-h-screen">
+                <main className="flex-1 w-full max-w-[600px] sm:border-r border-[#2f3336] min-h-screen pb-[60px] sm:pb-0 relative">
+                    {/* Mobile Top Header */}
+                    <div className="sm:hidden sticky top-0 z-30 bg-black/80 backdrop-blur-md border-b border-[#2f3336] px-4 py-3 flex items-center justify-between">
+                        {user && (
+                            <button onClick={() => setIsAccountMenuOpen(true)}>
+                                <div className="w-8 h-8 rounded-full bg-[#333639] shrink-0 overflow-hidden flex items-center justify-center">
+                                    <Avatar url={user.avatar_url} name={user.name || user.username} />
+                                </div>
+                            </button>
+                        )}
+                        <Link to="/home" className="flex items-center justify-center absolute left-1/2 -translate-x-1/2">
+                            <svg viewBox="0 0 24 24" aria-hidden="true" className="w-6 h-6 fill-white"><g><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.008 5.96H5.078z"></path></g></svg>
+                        </Link>
+                        <div className="w-8" /> {/* Spacer for centering */}
+                    </div>
+
                     {children}
+
+                    {/* Mobile Floating Action Button */}
+                    <button
+                        onClick={() => setIsPostModalOpen(true)}
+                        className="sm:hidden fixed bottom-[76px] right-4 w-[56px] h-[56px] bg-[#1d9bf0] hover:bg-[#1a8cd8] text-white rounded-full flex items-center justify-center shadow-lg transition-colors z-20"
+                    >
+                        <svg viewBox="0 0 24 24" aria-hidden="true" className="w-6 h-6 fill-current"><g><path d="M23 3c-6.62-.1-10.38 2.421-13.05 6.03C7.29 12.61 6 17.331 6 22h2c0-1.007.07-2.012.19-3H12c4.1 0 7.48-3.082 7.94-7.054C22.79 10.147 23.17 6.359 23 3zm-7 8h-1.5v2H16c.63-.016 1.2-.08 1.72-.188C16.95 15.24 14.68 17 12 17H8.55c.57-2.512 1.57-4.851 3-6.78 2.16-2.912 5.29-4.911 9.45-5.187C20.95 8.079 19.9 11 16 11zM4 9V6H1V4h3V1h2v3h3v2H6v3H4z"></path></g></svg>
+                    </button>
                 </main>
+
+                {/* Mobile Bottom Navigation */}
+                <nav className="sm:hidden fixed bottom-0 left-0 w-full bg-black border-t border-[#2f3336] flex justify-around items-center h-[60px] z-30">
+                    {NAV_ITEMS.filter(item => ['Home', 'Explore', 'Notifications', 'Chat'].includes(item.name)).map(item => {
+                        const isActive = location.pathname.startsWith(item.path)
+                        return (
+                            <Link key={item.name} to={item.path} className="flex-1 flex justify-center py-2 h-full flex flex-col items-center justify-center">
+                                <div className="relative">
+                                    {isActive ? item.activeIcon : item.icon}
+                                </div>
+                            </Link>
+                        )
+                    })}
+                </nav>
 
                 {/* Right Sidebar (Search & Trends) */}
                 <div className="hidden lg:block w-[350px] shrink-0 pl-8 pr-4 py-2">
