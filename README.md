@@ -77,3 +77,5 @@ Se utilizó el **Asistente de Codificación por IA (Antigravity/Gemini)** a lo l
 - **Implementación de Arquitectura**: Guió en la configuración del patrón `dry-transaction` para objetos de servicio y en los mecanismos de manejo centralizado de errores, asegurando que se siguieran las mejores prácticas desde el principio.
 - **Testing (Pruebas)**: Creación de bases para conjuntos de pruebas comprehensivos (RSpec para el backend y Jest/React Testing Library para el frontend) para mantener una alta cobertura de código y fiabilidad.
 - **Debugging & Refactoring**: Ayudó en el diagnóstico de *bugs* complejos respecto a persistencia de estados (como el problema de regeneración de URLs de Active Storage) y en la identificación de áreas críticas para refactorizar en pos de una mayor adherencia a los principios SOLID.
+
+Aquí dejo el [Notion](https://www.notion.so/The-Fock-Challenge-303170c1663c80ae9a34de8c163dc8e7?source=copy_link) donde fui anotando los prompts utilizados, y como empecé a diseñar y plantear el desarrollo del challenge.
