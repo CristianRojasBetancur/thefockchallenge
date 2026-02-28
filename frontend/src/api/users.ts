@@ -8,3 +8,7 @@ export const fetchUserProfile = async (usernameOrId: string | number): Promise<U
 export const searchUsers = async (query: string): Promise<User[]> => {
     return apiRequest<User[]>('GET', `/api/v1/users?query=${encodeURIComponent(query)}`)
 }
+
+export const getExploreUsers = async (): Promise<User[]> => {
+    return apiRequest<User[]>('GET', '/api/v1/users/explore')
+}
