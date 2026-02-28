@@ -12,13 +12,13 @@ export function PostModal({ onClose }: { onClose: () => void }) {
     }
 
     return (
-        <div className="fixed inset-0 z-50 flex items-start justify-center pt-[5%] bg-[#5b7083]/40" onClick={onClose}>
-            <div 
-                className="bg-black w-full max-w-[600px] rounded-2xl min-h-[250px] shadow-[0_0_15px_rgba(255,255,255,0.2)] p-2 relative"
+        <div className="fixed inset-0 z-50 flex items-start justify-center pt-0 sm:pt-[5%] bg-[#5b7083]/40" onClick={onClose}>
+            <div
+                className="bg-black w-full h-full sm:h-auto sm:max-w-[600px] sm:rounded-2xl min-h-[250px] shadow-[0_0_15px_rgba(255,255,255,0.2)] p-2 sm:p-4 relative flex flex-col"
                 onClick={e => e.stopPropagation()}
             >
                 <div className="flex items-center justify-between pb-2">
-                    <button 
+                    <button
                         onClick={onClose}
                         className="w-9 h-9 rounded-full flex items-center justify-center hover:bg-white/[0.1] transition-colors"
                     >
@@ -30,7 +30,7 @@ export function PostModal({ onClose }: { onClose: () => void }) {
                 </div>
                 {/* Reusing existing TweetForm */}
                 <div className="pt-2 px-2 -mx-4 border-t border-transparent">
-                  <TweetForm onTweetCreated={handleTweetCreated} />
+                    <TweetForm onTweetCreated={handleTweetCreated} />
                 </div>
             </div>
         </div>
