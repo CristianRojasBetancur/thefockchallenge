@@ -15,6 +15,7 @@ interface AuthContextValue {
     login: (credentials: LoginCredentials) => Promise<AuthResponse>
     register: (credentials: RegisterCredentials) => Promise<AuthResponse>
     logout: () => Promise<void>
+    updateUser: (user: User) => void
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null)
@@ -41,6 +42,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         return () => { cancelled = true }
     }, [])
 
+    const updateUser = useCallback((updatedUser: User) => {
+        setUser(updatedUser)
+    }, [])
+
     const login = useCallback(async (credentials: LoginCredentials): Promise<AuthResponse> => {
         const profile = await apiLogin(credentials)
         setUser(profile)
@@ -58,7 +63,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setUser(null)
     }, [])
 
-    const value: AuthContextValue = { user, isLoading, login, register, logout }
+    const value: AuthContextValue = { user, isLoading, login, register, logout, updateUser }
 
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }

@@ -12,3 +12,7 @@ export const searchUsers = async (query: string): Promise<User[]> => {
 export const getExploreUsers = async (): Promise<User[]> => {
     return apiRequest<User[]>('GET', '/api/v1/users/explore')
 }
+
+export const updateProfile = async (formData: FormData): Promise<User> => {
+    return apiRequest<User>('PATCH', '/api/v1/profile', formData)
+}

@@ -16,3 +16,7 @@ export const likeTweet = async (id: number): Promise<void> => {
 export const unlikeTweet = async (id: number): Promise<void> => {
     return apiRequest<void>('DELETE', `/api/v1/tweets/${id}/like`)
 }
+
+export const fetchUserTweets = async (usernameOrId: string | number, page: number = 1): Promise<Tweet[]> => {
+    return apiRequest<Tweet[]>('GET', `/api/v1/users/${usernameOrId}/tweets?page=${page}`)
+}
