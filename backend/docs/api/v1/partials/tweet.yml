@@ -14,8 +14,14 @@
       :created_at:
         :type: string
         :format: date-time
-        :example: '2023-01-01T00:00:00Z'
+        :example: "2023-01-01T00:00:00Z"
       :updated_at:
         :type: string
         :format: date-time
-        :example: '2023-01-01T00:00:00Z'
+        :example: "2023-01-01T00:00:00Z"
+      :likes_count:
+        :type: integer
+        :example: 42
+      :liked_by_current_user:
+        :type: boolean
+        :example: true

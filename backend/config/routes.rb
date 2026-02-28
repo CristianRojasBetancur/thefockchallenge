@@ -16,10 +16,18 @@ Rails.application.routes.draw do
         delete :banner, on: :member, action: :destroy_banner
       end
 
-      resources :tweets, only: %i[create destroy]
+      resources :tweets, only: %i[create destroy] do
+        collection do
+          get :for_you, to: "for_you_tweets#index"
+        end
+        resource :like, only: %i[create destroy]
+      end
       get :timeline, to: "timelines#index"
 
       resources :users, only: [:index, :show] do
+        collection do
+          get :explore, to: "explore_users#index"
+        end
         resource :follow, only: %i[create destroy]
         get :followers, to: "follows#followers"
         get :following, to: "follows#following"

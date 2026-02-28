@@ -2,11 +2,12 @@
 #
 # Table name: tweets
 #
-#  id         :bigint           not null, primary key
-#  content    :string(280)      not null
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  user_id    :bigint           not null
+#  id          :bigint           not null, primary key
+#  content     :string(280)      not null
+#  likes_count :integer          default(0), not null
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  user_id     :bigint           not null
 #
 # Indexes
 #
@@ -19,6 +20,9 @@
 #
 class Tweet < ApplicationRecord
   belongs_to :user, counter_cache: true
+
+  has_many :likes, dependent: :destroy
+  has_many :liking_users, through: :likes, source: :user
 
   validates :content, presence: true, length: { maximum: 280 }
 end
