@@ -3,6 +3,10 @@ import { LoginPage } from './pages/LoginPage'
 import { RegisterPage } from './pages/RegisterPage'
 import { HomePage } from './pages/HomePage'
 import { ProfilePage } from './pages/ProfilePage'
+import { ExplorePage } from './pages/ExplorePage'
+import { NotificationsPage } from './pages/NotificationsPage'
+import { FollowPage } from './pages/FollowPage'
+import { PlaceholderPage } from './pages/PlaceholderPage'
 import { useAuth } from './hooks/useAuth'
 import { MainLayout } from './components/layout/MainLayout'
 
@@ -56,6 +60,26 @@ function App() {
              </ProtectedRoute>
           }
         />
+        <Route path="/explore" element={<ProtectedRoute><MainLayout><ExplorePage /></MainLayout></ProtectedRoute>} />
+        <Route path="/notifications" element={<ProtectedRoute><MainLayout><NotificationsPage /></MainLayout></ProtectedRoute>} />
+        <Route path="/follow" element={<ProtectedRoute><MainLayout><FollowPage /></MainLayout></ProtectedRoute>} />
+        
+        {['/chat', '/grok', '/bookmarks', '/creator-studio', '/premium'].map(path => (
+          <Route
+            key={path}
+            path={path}
+            element={
+              <ProtectedRoute>
+                <MainLayout>
+                  <PlaceholderPage 
+                    title={path.substring(1).charAt(0).toUpperCase() + path.substring(2).replace('-', ' ')} 
+                    message="This feature is not available yet, but it looks exactly like X/Twitter!" 
+                  />
+                </MainLayout>
+              </ProtectedRoute>
+            }
+          />
+        ))}
         {/* Catch-all — redirect unknown paths to login */}
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>

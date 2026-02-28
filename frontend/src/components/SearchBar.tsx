@@ -67,7 +67,7 @@ export function SearchBar() {
     return (
         <div ref={wrapperRef} className="relative w-full max-w-sm group">
             {/* Search Input Container */}
-            <div className={`flex items-center bg-[#202327] rounded-full px-4 border focus-within:bg-black focus-within:border-[#1d9bf0] ${isOpen ? 'border-[#1d9bf0]' : 'border-transparent'}`}>
+            <div className={`flex items-center bg-black rounded-full px-4 border focus-within:border-[#1d9bf0] ${isOpen ? 'border-[#1d9bf0]' : 'border-[#2f3336]'}`}>
                 {/* Search Icon */}
                 <span className="text-[#71767b] group-focus-within:text-[#1d9bf0] mr-3">
                     <svg viewBox="0 0 24 24" aria-hidden="true" className="w-5 h-5 fill-current">
@@ -86,7 +86,7 @@ export function SearchBar() {
                         if (query.trim().length >= 2) setIsOpen(true)
                     }}
                     placeholder="Search"
-                    className="bg-transparent border-none text-white py-3 w-full outline-none placeholder-[#71767b]"
+                    className="bg-transparent border-none text-white py-2 w-full outline-none placeholder-[#71767b] text-[15px]"
                 />
                 
                 {/* Clear Icon */}
@@ -117,6 +117,7 @@ export function SearchBar() {
                                     user={user} 
                                     // Let UserCard manage optimistic follow internally
                                     onFollowToggle={() => {}} 
+                                    hideFollowButton={true}
                                 />
                             ))}
                         </div>
