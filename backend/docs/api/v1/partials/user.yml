@@ -51,11 +51,11 @@
       :avatar_url:
         :type: string
         :nullable: true
-        :example: http://localhost:3000/rails/active_storage/blobs/...
+        :example: http://localhost:3000/rails/active_storage/blobs/proxy/...
       :banner_url:
         :type: string
         :nullable: true
-        :example:
+        :example: http://localhost:3000/rails/active_storage/blobs/proxy/...
       :created_at:
         :type: string
         :format: date-time

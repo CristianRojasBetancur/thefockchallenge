@@ -50,7 +50,7 @@ class UserSerializer
       avatar_url:       attachment_url(@user.avatar),
       banner_url:       attachment_url(@user.banner),
       created_at:       @user.created_at,
-      is_following:     false # The profile owner cannot follow themselves
+      is_following:     false
     }
   end
 
@@ -59,9 +59,8 @@ class UserSerializer
   def attachment_url(attachment)
     return nil unless attachment.attached?
 
-    Rails.application.routes.url_helpers.rails_blob_url(
-      attachment,
-      host: Rails.application.config.action_mailer.default_url_options&.dig(:host) || "localhost:3000"
-    )
+    options = Rails.application.config.action_mailer.default_url_options || { host: "localhost:3000" }
+
+    Rails.application.routes.url_helpers.rails_storage_proxy_url(attachment, **options)
   end
 end

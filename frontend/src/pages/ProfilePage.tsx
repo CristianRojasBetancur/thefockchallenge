@@ -7,6 +7,7 @@ import { textClasses } from '../styles/classes'
 import { useAuth } from '../hooks/useAuth'
 import { ProfileTweets } from '../components/ProfileTweets'
 import { EditProfileModal } from '../components/EditProfileModal'
+import { Avatar } from '../components/Avatar'
 
 type ProfileTab = 'tweets' | 'replies' | 'media' | 'likes'
 
@@ -14,7 +15,7 @@ export function ProfilePage() {
     const { username } = useParams<{ username: string }>()
     const navigate = useNavigate()
     const { user: currentUser, updateUser } = useAuth()
-    
+
     const [user, setUser] = useState<User | null>(null)
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState<string | null>(null)
@@ -72,7 +73,7 @@ export function ProfilePage() {
         setUser(updatedUser)
         if (isOwnProfile) {
             updateUser(updatedUser)
-            
+
             // If the username changed, update the URL without refreshing
             if (updatedUser.username !== username) {
                 navigate(`/profile/${updatedUser.username}`, { replace: true })
@@ -84,7 +85,7 @@ export function ProfilePage() {
         <div className="flex flex-col w-full min-h-screen bg-black relative">
             {/* Sticky Header */}
             <header className="sticky top-0 z-20 bg-black/80 backdrop-blur-md flex items-center gap-6 px-4 py-1 h-[53px]">
-                <button 
+                <button
                     onClick={() => navigate(-1)}
                     className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-white/10 transition-colors"
                 >
@@ -107,16 +108,12 @@ export function ProfilePage() {
             <div className="px-4 pb-0 relative">
                 <div className="flex justify-between items-start mb-3 h-[68px]">
                     <div className="absolute -top-[68px] w-[134px] h-[134px] rounded-full border-4 border-black bg-[#333639] overflow-hidden flex items-center justify-center">
-                        {user.avatar_url ? (
-                            <img src={user.avatar_url} alt="Avatar" className="w-full h-full object-cover" />
-                        ) : (
-                            <span className="text-white text-5xl font-bold">{user.username.charAt(0).toUpperCase()}</span>
-                        )}
+                        <Avatar url={user.avatar_url} name={user.name || user.username} />
                     </div>
-                    
+
                     <div className="ml-auto pt-3">
                         {isOwnProfile ? (
-                            <button 
+                            <button
                                 onClick={() => setIsEditModalOpen(true)}
                                 className="px-4 py-1.5 font-bold rounded-full border border-[#536471] text-white hover:bg-white/10 transition-colors text-[15px] min-w-[36px] min-h-[36px]"
                             >
@@ -127,10 +124,10 @@ export function ProfilePage() {
                                 userId={user.id}
                                 initialIsFollowing={user.is_following ?? false}
                                 onToggle={(newVal) => {
-                                    setUser(prev => prev ? { 
-                                        ...prev, 
-                                        is_following: newVal, 
-                                        followers_count: Math.max(0, prev.followers_count + (newVal ? 1 : -1)) 
+                                    setUser(prev => prev ? {
+                                        ...prev,
+                                        is_following: newVal,
+                                        followers_count: Math.max(0, prev.followers_count + (newVal ? 1 : -1))
                                     } : null)
                                 }}
                             />
@@ -179,7 +176,7 @@ export function ProfilePage() {
                     { id: 'media', label: 'Media' },
                     { id: 'likes', label: 'Likes' }
                 ].map(tab => (
-                    <button 
+                    <button
                         key={tab.id}
                         onClick={() => setActiveTab(tab.id as ProfileTab)}
                         className="flex-1 min-w-[60px] hover:bg-white/10 transition-colors flex justify-center pt-4 px-4"
@@ -201,7 +198,7 @@ export function ProfilePage() {
                 {activeTab === 'tweets' && (
                     <ProfileTweets username={user.username} />
                 )}
-                
+
                 {/* Placeholders for other tabs */}
                 {activeTab !== 'tweets' && (
                     <div className="flex flex-col items-center justify-center p-8 mt-8">
@@ -228,10 +225,10 @@ export function ProfilePage() {
             </div>
 
             {isEditModalOpen && user && (
-                <EditProfileModal 
-                    user={user} 
-                    onClose={() => setIsEditModalOpen(false)} 
-                    onSaveSuccess={handleSaveSuccess} 
+                <EditProfileModal
+                    user={user}
+                    onClose={() => setIsEditModalOpen(false)}
+                    onSaveSuccess={handleSaveSuccess}
                 />
             )}
         </div>

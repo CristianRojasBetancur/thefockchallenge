@@ -2,6 +2,7 @@ import type { Tweet } from '../types/tweet'
 import { textClasses } from '../styles/classes'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
+import { Avatar } from './Avatar'
 
 interface TweetCardProps {
     tweet: Tweet
@@ -13,7 +14,7 @@ interface TweetCardProps {
 export function TweetCard({ tweet, onDelete, isDeleting, onLikeToggle }: TweetCardProps) {
     const { user } = useAuth()
     const isOwnTweet = user?.id === tweet.user.id
-    
+
     // Fallbacks just in case backend data is missing
     const likesCount = tweet.likes_count ?? 0;
     const isLiked = tweet.liked_by_user ?? false;
@@ -23,11 +24,11 @@ export function TweetCard({ tweet, onDelete, isDeleting, onLikeToggle }: TweetCa
             const date = new Date(tweet.created_at)
             const now = new Date()
             const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000)
-            
+
             if (diffInSeconds < 60) return `${diffInSeconds}s`
             if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)}m`
             if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)}h`
-            
+
             return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
         } catch {
             return ''
@@ -39,11 +40,7 @@ export function TweetCard({ tweet, onDelete, isDeleting, onLikeToggle }: TweetCa
             {/* Avatar Placeholder */}
             <Link to={`/profile/${tweet.user.username}`} className="shrink-0">
                 <div className="w-10 h-10 rounded-full bg-[#333639] flex items-center justify-center overflow-hidden">
-                    {tweet.user.avatar_url ? (
-                        <img src={tweet.user.avatar_url} alt={tweet.user.name ?? tweet.user.username} className="w-full h-full object-cover" />
-                    ) : (
-                        <span className="text-white font-bold">{tweet.user.username.charAt(0).toUpperCase()}</span>
-                    )}
+                    <Avatar url={tweet.user.avatar_url} name={tweet.user.name || tweet.user.username} />
                 </div>
             </Link>
 
@@ -96,7 +93,7 @@ export function TweetCard({ tweet, onDelete, isDeleting, onLikeToggle }: TweetCa
                             </div>
                         </div>
                     </button>
-                    <button 
+                    <button
                         onClick={() => onLikeToggle?.(tweet.id, isLiked)}
                         className={`flex items-center transition-colors group ${isLiked ? 'text-[#f91880]' : 'hover:text-[#f91880]'}`}
                     >

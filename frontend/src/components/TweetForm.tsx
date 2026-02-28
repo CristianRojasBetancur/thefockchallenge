@@ -3,6 +3,7 @@ import { useAuth } from '../hooks/useAuth'
 import { Button } from './ui/Button'
 import { createTweet } from '../api/tweets'
 import type { Tweet } from '../types/tweet'
+import { Avatar } from './Avatar'
 
 interface TweetFormProps {
     onTweetCreated: (tweet: Tweet) => void
@@ -35,7 +36,7 @@ export function TweetForm({ onTweetCreated }: TweetFormProps) {
 
         setIsLoading(true)
         setError(null)
-        
+
         try {
             const newTweet = await createTweet(content.trim())
             setContent('')
@@ -52,11 +53,7 @@ export function TweetForm({ onTweetCreated }: TweetFormProps) {
         <div className="border-b border-[#2f3336] p-4 flex gap-4">
             <div className="shrink-0">
                 <div className="w-10 h-10 rounded-full bg-[#333639] flex items-center justify-center overflow-hidden">
-                    {user?.avatar_url ? (
-                        <img src={user.avatar_url} alt={user.name ?? user.username} className="w-full h-full object-cover" />
-                    ) : (
-                        <span className="text-white font-bold">{user?.username.charAt(0).toUpperCase()}</span>
-                    )}
+                    <Avatar url={user?.avatar_url || null} name={user?.name || user?.username || ''} />
                 </div>
             </div>
 
@@ -71,7 +68,7 @@ export function TweetForm({ onTweetCreated }: TweetFormProps) {
                         rows={1}
                         maxLength={MAX_CHARS + 10} // Allow typing a bit over to show minus
                     />
-                    
+
                     {error && <div className="text-[#f4212e] text-[13px] mt-2">{error}</div>}
 
                     <div className="border-t border-[#2f3336] mt-3 pt-3 flex items-center justify-between">
@@ -83,9 +80,9 @@ export function TweetForm({ onTweetCreated }: TweetFormProps) {
                                 </span>
                             )}
                         </div>
-                        <Button 
-                            type="submit" 
-                            disabled={isDisabled} 
+                        <Button
+                            type="submit"
+                            disabled={isDisabled}
                             isLoading={isLoading}
                             className="!w-auto !px-4 !py-1.5 !text-[15px] font-bold"
                         >

@@ -5,6 +5,7 @@ import { useAuth } from '../../hooks/useAuth'
 import { PostModal } from '../PostModal'
 import { AuthModal } from '../AuthModal'
 import { textClasses } from '../../styles/classes'
+import { Avatar } from '../Avatar'
 
 const NAV_ITEMS = [
     {
@@ -49,7 +50,7 @@ const NAV_ITEMS = [
     },
     {
         name: 'Premium', path: '/premium',
-        icon: <svg viewBox="0 0 24 24" aria-hidden="true" className="w-[26.25px] h-[26.25px] fill-current"><g><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.008 5.96H5.078z"></path></g></svg>, 
+        icon: <svg viewBox="0 0 24 24" aria-hidden="true" className="w-[26.25px] h-[26.25px] fill-current"><g><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.008 5.96H5.078z"></path></g></svg>,
         activeIcon: <svg viewBox="0 0 24 24" aria-hidden="true" className="w-[26.25px] h-[26.25px] fill-current"><g><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.008 5.96H5.078z"></path></g></svg>
     },
 ]
@@ -57,14 +58,14 @@ const NAV_ITEMS = [
 export function MainLayout({ children }: { children: ReactNode }) {
     const { user, logout } = useAuth()
     const location = useLocation()
-    
+
     const [isPostModalOpen, setIsPostModalOpen] = useState(false)
     const [isAuthModalOpen, setIsAuthModalOpen] = useState(false)
     const [isAccountMenuOpen, setIsAccountMenuOpen] = useState(false)
 
     // Append profile dynamically based on logged in user
     const finalNavItems = [...NAV_ITEMS, {
-        name: 'Profile', 
+        name: 'Profile',
         path: `/profile/${user?.username}`,
         icon: <svg viewBox="0 0 24 24" aria-hidden="true" className="w-[26.25px] h-[26.25px] fill-current"><g><path d="M12 11.816c1.355 0 2.872-.15 3.84-1.256.814-.93 1.078-2.368.806-4.392-.38-2.825-2.117-4.512-4.646-4.512S7.734 3.343 7.354 6.17c-.272 2.022-.008 3.46.806 4.39.968 1.107 2.485 1.256 3.84 1.256zM8.84 6.368c.162-1.2.787-3.212 3.16-3.212s2.998 2.013 3.16 3.212c.207 1.55.057 2.627-.45 3.205-.455.52-1.266.686-2.71.686s-2.255-.166-2.71-.686c-.507-.578-.657-1.656-.45-3.205zm11.44 12.868c-.877-3.526-4.282-5.99-8.28-5.99s-7.403 2.464-8.28 5.99c-.172.692-.028 1.4.395 1.94.408.52 1.04.82 1.733.82h12.304c.693 0 1.325-.3 1.733-.82.424-.54.567-1.247.394-1.94zm-1.576 1.016c-.126.16-.316.246-.552.246H5.848c-.235 0-.426-.085-.552-.246-.137-.174-.18-.412-.12-.654.71-2.855 3.517-4.85 6.824-4.85s6.114 1.994 6.824 4.85c.06.241.017.48-.12.654z"></path></g></svg>,
         activeIcon: <svg viewBox="0 0 24 24" aria-hidden="true" className="w-[26.25px] h-[26.25px] fill-current"><g><path d="M12 11.816c1.355 0 2.872-.15 3.84-1.256.814-.93 1.078-2.368.806-4.392-.38-2.825-2.117-4.512-4.646-4.512S7.734 3.343 7.354 6.17c-.272 2.022-.008 3.46.806 4.39.968 1.107 2.485 1.256 3.84 1.256zM8.84 6.368c.162-1.2.787-3.212 3.16-3.212s2.998 2.013 3.16 3.212c.207 1.55.057 2.627-.45 3.205-.455.52-1.266.686-2.71.686s-2.255-.166-2.71-.686c-.507-.578-.657-1.656-.45-3.205zm11.44 12.868c-.877-3.526-4.282-5.99-8.28-5.99s-7.403 2.464-8.28 5.99c-.172.692-.028 1.4.395 1.94.408.52 1.04.82 1.733.82h12.304c.693 0 1.325-.3 1.733-.82.424-.54.567-1.247.394-1.94zm-1.576 1.016c-.126.16-.316.246-.552.246H5.848c-.235 0-.426-.085-.552-.246-.137-.174-.18-.412-.12-.654.71-2.855 3.517-4.85 6.824-4.85s6.114 1.994 6.824 4.85c.06.241.017.48-.12.654z"></path></g></svg>
@@ -78,7 +79,7 @@ export function MainLayout({ children }: { children: ReactNode }) {
     return (
         <div className="min-h-screen bg-black flex justify-center w-full">
             <div className="flex w-full max-w-[1265px] justify-between">
-                
+
                 {/* Left Sidebar */}
                 <header className="w-[68px] xl:w-[275px] shrink-0 border-r border-[#2f3336] p-2 flex flex-col justify-between items-center xl:items-start h-screen sticky top-0">
                     <div className="w-full h-full flex flex-col justify-between overflow-y-auto">
@@ -87,15 +88,15 @@ export function MainLayout({ children }: { children: ReactNode }) {
                             <Link to="/home" className="w-[50px] h-[50px] rounded-full hover:bg-white/[0.1] transition-colors flex items-center justify-center mb-2 xl:ml-2">
                                 <svg viewBox="0 0 24 24" aria-hidden="true" className="w-[28px] h-[28px] fill-white"><g><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.008 5.96H5.078z"></path></g></svg>
                             </Link>
-                            
+
                             {/* Navigation Items */}
                             <nav className="flex flex-col w-full items-center xl:items-start">
                                 {finalNavItems.map(item => {
                                     const isActive = location.pathname.startsWith(item.path)
                                     return (
-                                        <Link 
-                                            key={item.name} 
-                                            to={item.path} 
+                                        <Link
+                                            key={item.name}
+                                            to={item.path}
                                             className="group flex w-auto max-w-full mb-1"
                                         >
                                             <div className="p-3 w-auto xl:pr-6 rounded-full hover:bg-white/[0.1] transition-colors flex items-center gap-5 text-xl">
@@ -113,7 +114,7 @@ export function MainLayout({ children }: { children: ReactNode }) {
 
                             {/* Post Button */}
                             <div className="w-full xl:w-[90%] mt-4 flex justify-center xl:justify-start">
-                                <button 
+                                <button
                                     onClick={() => setIsPostModalOpen(true)}
                                     className="w-[50px] h-[50px] xl:w-full xl:h-[50px] bg-white hover:bg-[#d7dbdc] text-black rounded-full font-bold text-[17px] transition-colors shadow-sm flex items-center justify-center p-0"
                                 >
@@ -132,7 +133,7 @@ export function MainLayout({ children }: { children: ReactNode }) {
                                         {/* Invisible backdrop to close on click outside */}
                                         <div className="fixed inset-0 z-40" onClick={() => setIsAccountMenuOpen(false)}></div>
                                         <div className="absolute bottom-full left-0 mb-4 w-[300px] bg-black border border-[#2f3336] rounded-xl shadow-[0_0_15px_rgba(255,255,255,0.2)] py-3 z-50 flex flex-col font-bold text-[15px]">
-                                            <button 
+                                            <button
                                                 onClick={() => {
                                                     setIsAccountMenuOpen(false)
                                                     setIsAuthModalOpen(true)
@@ -141,7 +142,7 @@ export function MainLayout({ children }: { children: ReactNode }) {
                                             >
                                                 Add an existing account
                                             </button>
-                                            <button 
+                                            <button
                                                 onClick={handleLogout}
                                                 className="px-4 py-3 text-left text-white hover:bg-white/[0.03] transition-colors"
                                             >
@@ -151,17 +152,13 @@ export function MainLayout({ children }: { children: ReactNode }) {
                                     </>
                                 )}
 
-                                <button 
+                                <button
                                     onClick={() => setIsAccountMenuOpen(true)}
                                     className="p-3 w-auto xl:w-full rounded-full hover:bg-white/[0.1] transition-colors flex items-center justify-center xl:justify-between mb-4 mt-auto"
                                 >
                                     <div className="flex items-center gap-3 w-full">
                                         <div className="w-10 h-10 rounded-full bg-[#333639] shrink-0 overflow-hidden flex items-center justify-center">
-                                            {user.avatar_url ? (
-                                                <img src={user.avatar_url} alt={user.name ?? user.username} className="w-full h-full object-cover" />
-                                            ) : (
-                                                <span className="text-white font-bold">{user.username.charAt(0).toUpperCase()}</span>
-                                            )}
+                                            <Avatar url={user.avatar_url} name={user.name || user.username} />
                                         </div>
                                         <div className="hidden xl:flex flex-col items-start min-w-0 flex-1">
                                             <span className="font-bold text-white truncate w-full text-left">{user.name || user.username}</span>
