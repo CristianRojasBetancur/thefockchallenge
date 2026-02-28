@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import type { Tweet } from '../types/tweet'
 import { fetchTimeline } from '../api/timeline'
-import { deleteTweet } from '../api/tweets'
+import { deleteTweet, likeTweet, unlikeTweet } from '../api/tweets'
 import { TweetCard } from './TweetCard'
 import { TweetForm } from './TweetForm'
 
@@ -80,6 +80,51 @@ export function Timeline() {
         }
     }
     
+    const [likingIds, setLikingIds] = useState<Set<number>>(new Set())
+
+    const handleLikeToggle = async (id: number, currentIsLiked: boolean) => {
+        if (likingIds.has(id)) return // prevent rapid double clicks
+
+        // Optimistic UI update
+        setTweets(prev => prev.map(tweet => {
+            if (tweet.id !== id) return tweet
+
+            return {
+                ...tweet,
+                liked_by_user: !currentIsLiked,
+                likes_count: Math.max(0, (tweet.likes_count ?? 0) + (currentIsLiked ? -1 : 1))
+            }
+        }))
+
+        setLikingIds(prev => new Set(prev).add(id))
+        
+        try {
+            if (currentIsLiked) {
+                await unlikeTweet(id)
+            } else {
+                await likeTweet(id)
+            }
+        } catch (error) {
+            console.error('Failed to toggle like', error)
+            
+            // Revert optimistic update on failure
+            setTweets(prev => prev.map(tweet => {
+                if (tweet.id !== id) return tweet
+
+                return {
+                    ...tweet,
+                    liked_by_user: currentIsLiked,
+                    likes_count: Math.max(0, (tweet.likes_count ?? 0) + (currentIsLiked ? 1 : -1))
+                }
+            }))
+        } finally {
+            setLikingIds(prev => {
+                const newSet = new Set(prev)
+                newSet.delete(id)
+                return newSet
+            })
+        }
+    }
 
 
     return (
@@ -137,6 +182,7 @@ export function Timeline() {
                                         tweet={tweet} 
                                         onDelete={handleDelete}
                                         isDeleting={deletingIds.has(tweet.id)}
+                                        onLikeToggle={handleLikeToggle}
                                     />
                                 </div>
                             )

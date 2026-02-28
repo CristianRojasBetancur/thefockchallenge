@@ -8,3 +8,11 @@ export const createTweet = async (content: string): Promise<Tweet> => {
 export const deleteTweet = async (id: number): Promise<void> => {
     return apiRequest<void>('DELETE', `/api/v1/tweets/${id}`)
 }
+
+export const likeTweet = async (id: number): Promise<void> => {
+    return apiRequest<void>('POST', `/api/v1/tweets/${id}/like`)
+}
+
+export const unlikeTweet = async (id: number): Promise<void> => {
+    return apiRequest<void>('DELETE', `/api/v1/tweets/${id}/like`)
+}
