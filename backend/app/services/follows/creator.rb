@@ -18,12 +18,17 @@ module Follows
       current_user = input[:current_user]
       target_user = input[:target_user]
 
-      follow = Follow.new(follower: current_user, followed: target_user)
+      follow = Follow.find_or_initialize_by(follower: current_user, followed: target_user)
+      return Success(follow) if follow.persisted?
+
       if follow.save
         Success(follow)
       else
         Failure(ActiveRecord::RecordInvalid.new(follow))
       end
+    rescue ActiveRecord::RecordNotUnique
+      follow = Follow.find_by(follower: current_user, followed: target_user)
+      Success(follow)
     end
   end
 end

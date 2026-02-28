@@ -43,7 +43,6 @@ module ErrorHandling
   # Catch-all for any unmapped StandardError.
   # Logs the exception and returns a generic 500 response.
   def handle_standard_error(exception)
-    binding.break
     Rails.logger.error("[ErrorHandling] Unmapped exception: #{exception.class} — #{exception.message}")
     Rails.logger.error(exception.backtrace&.first(10)&.join("\n"))
 
