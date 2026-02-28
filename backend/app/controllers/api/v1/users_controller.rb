@@ -8,7 +8,6 @@ module Api
         query = params[:query]
         
         if query.present? && query.length >= 2
-          # Case-insensitive search on username or name
           search_term = "%#{query}%"
           @users = User.where('username ILIKE :q OR name ILIKE :q', q: search_term).limit(10)
         else
@@ -20,7 +19,6 @@ module Api
 
       # GET /api/v1/users/:id
       def show
-        # Allow looking up by username or id
         @user = User.find_by(username: params[:id]) || User.find_by(id: params[:id])
         
         if @user

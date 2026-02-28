@@ -2,6 +2,7 @@ import type { User } from '../types/auth'
 import { FollowButton } from './FollowButton'
 import { Link } from 'react-router-dom'
 import { textClasses } from '../styles/classes'
+import { Avatar } from './Avatar'
 
 interface UserCardProps {
     user: User
@@ -15,11 +16,7 @@ export function UserCard({ user, onFollowToggle, hideFollowButton }: UserCardPro
             {/* Avatar */}
             <Link to={`/profile/${user.username}`} className="shrink-0 flex items-start self-start">
                 <div className="w-10 h-10 rounded-full bg-[#333639] flex items-center justify-center overflow-hidden">
-                    {user.avatar_url ? (
-                        <img src={user.avatar_url} alt={user.name ?? user.username} className="w-full h-full object-cover" />
-                    ) : (
-                        <span className="text-white font-bold">{user.username.charAt(0).toUpperCase()}</span>
-                    )}
+                    <Avatar url={user.avatar_url} name={user.name || user.username} />
                 </div>
             </Link>
 
@@ -36,8 +33,8 @@ export function UserCard({ user, onFollowToggle, hideFollowButton }: UserCardPro
 
                     {!hideFollowButton && (
                         <div className="pl-2 shrink-0">
-                            <FollowButton 
-                                userId={user.id} 
+                            <FollowButton
+                                userId={user.id}
                                 initialIsFollowing={user.is_following ?? false}
                                 onToggle={(isFollowing) => onFollowToggle?.(user.id, isFollowing)}
                             />
