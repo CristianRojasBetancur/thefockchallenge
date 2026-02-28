@@ -4,13 +4,10 @@ import { fetchTimeline } from '../api/timeline'
 import { deleteTweet } from '../api/tweets'
 import { TweetCard } from './TweetCard'
 import { TweetForm } from './TweetForm'
-import { useAuth } from '../hooks/useAuth'
-import { useNavigate, Link } from 'react-router-dom'
 
 export function Timeline() {
-    const { user, logout } = useAuth()
-    const navigate = useNavigate()
     const [tweets, setTweets] = useState<Tweet[]>([])
+    const [activeTab, setActiveTab] = useState<'for-you' | 'following'>('for-you')
     const [, setPage] = useState(1)
     const [isLoading, setIsLoading] = useState(false)
     const [hasMore, setHasMore] = useState(true)
@@ -39,8 +36,11 @@ export function Timeline() {
     }, [])
 
     useEffect(() => {
+        setTweets([])
+        setHasMore(true)
+        setIsInitialLoading(true)
         loadTweets(1, true)
-    }, [loadTweets])
+    }, [activeTab, loadTweets])
 
     const lastTweetElementRef = useCallback((node: HTMLDivElement | null) => {
         if (isLoading) return
@@ -80,30 +80,39 @@ export function Timeline() {
         }
     }
     
-    async function handleLogout() {
-        await logout()
-        navigate('/login', { replace: true })
-    }
+
 
     return (
         <div className="flex flex-col w-full min-h-screen">
-            <header className="sticky top-0 z-10 bg-black/80 backdrop-blur-md border-b border-[#2f3336] p-4 flex justify-between items-center">
-                <Link to={`/profile/${user?.username}`} className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-                    <div className="w-8 h-8 rounded-full bg-[#333639] flex items-center justify-center overflow-hidden">
-                        {user?.avatar_url ? (
-                            <img src={user.avatar_url} alt={user.name ?? user.username} className="w-full h-full object-cover" />
-                        ) : (
-                            <span className="text-white text-sm font-bold">{user?.username.charAt(0).toUpperCase()}</span>
-                        )}
-                    </div>
-                    <h1 className="text-xl font-bold text-white hidden sm:block">Home</h1>
-                </Link>
-                <button 
-                    onClick={handleLogout}
-                    className="text-white text-[15px] font-bold px-4 py-1.5 border border-[#536471] rounded-full hover:bg-white/10 transition-colors"
-                >
-                    Log out
-                </button>
+            <header className="sticky top-0 z-10 bg-black/80 backdrop-blur-md border-b border-[#2f3336]">
+                <div className="flex w-full">
+                    <button 
+                        onClick={() => setActiveTab('for-you')}
+                        className="flex-1 hover:bg-white/10 transition-colors flex justify-center pt-4"
+                    >
+                        <div className="relative pb-4 flex flex-col items-center">
+                            <span className={activeTab === 'for-you' ? 'font-bold text-white' : 'font-medium text-[#71767b]'}>
+                                For you
+                            </span>
+                            {activeTab === 'for-you' && (
+                                <div className="absolute bottom-0 w-14 h-1 bg-[#1d9bf0] rounded-full" />
+                            )}
+                        </div>
+                    </button>
+                    <button 
+                        onClick={() => setActiveTab('following')}
+                        className="flex-1 hover:bg-white/10 transition-colors flex justify-center pt-4"
+                    >
+                        <div className="relative pb-4 flex flex-col items-center">
+                            <span className={activeTab === 'following' ? 'font-bold text-white' : 'font-medium text-[#71767b]'}>
+                                Following
+                            </span>
+                            {activeTab === 'following' && (
+                                <div className="absolute bottom-0 w-16 h-1 bg-[#1d9bf0] rounded-full" />
+                            )}
+                        </div>
+                    </button>
+                </div>
             </header>
 
             <TweetForm onTweetCreated={handleTweetCreated} />

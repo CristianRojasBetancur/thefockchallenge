@@ -6,9 +6,10 @@ import { textClasses } from '../styles/classes'
 interface UserCardProps {
     user: User
     onFollowToggle?: (userId: number, isFollowing: boolean) => void
+    hideFollowButton?: boolean
 }
 
-export function UserCard({ user, onFollowToggle }: UserCardProps) {
+export function UserCard({ user, onFollowToggle, hideFollowButton }: UserCardProps) {
     return (
         <article className="border-b border-[#2f3336] p-4 hover:bg-white/[0.03] transition-colors flex gap-3 items-center">
             {/* Avatar */}
@@ -33,13 +34,15 @@ export function UserCard({ user, onFollowToggle }: UserCardProps) {
                         </span>
                     </div>
 
-                    <div className="pl-2 shrink-0">
-                        <FollowButton 
-                            userId={user.id} 
-                            initialIsFollowing={user.is_following ?? false}
-                            onToggle={(isFollowing) => onFollowToggle?.(user.id, isFollowing)}
-                        />
-                    </div>
+                    {!hideFollowButton && (
+                        <div className="pl-2 shrink-0">
+                            <FollowButton 
+                                userId={user.id} 
+                                initialIsFollowing={user.is_following ?? false}
+                                onToggle={(isFollowing) => onFollowToggle?.(user.id, isFollowing)}
+                            />
+                        </div>
+                    )}
                 </div>
 
                 {user.bio && (
