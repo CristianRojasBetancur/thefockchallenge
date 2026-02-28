@@ -19,14 +19,21 @@ export async function apiRequest<T>(
     path: string,
     body?: unknown,
 ): Promise<T> {
+    const isFormData = body instanceof FormData
+
     const options: RequestInit = {
         method,
         credentials: 'include',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        headers: { Accept: 'application/json' },
+    }
+
+    if (!isFormData) {
+        // @ts-expect-error - overriding Headers type is fine here
+        options.headers['Content-Type'] = 'application/json'
     }
 
     if (body !== undefined) {
-        options.body = JSON.stringify(body)
+        options.body = isFormData ? body : JSON.stringify(body)
     }
 
     const response = await fetch(`${BASE_URL}${path}`, options)

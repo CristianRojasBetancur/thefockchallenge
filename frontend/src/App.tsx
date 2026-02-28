@@ -3,6 +3,7 @@ import { LoginPage } from './pages/LoginPage'
 import { RegisterPage } from './pages/RegisterPage'
 import { HomePage } from './pages/HomePage'
 import { ProfilePage } from './pages/ProfilePage'
+import { ProfileFollowsPage } from './pages/ProfileFollowsPage'
 import { ExplorePage } from './pages/ExplorePage'
 import { NotificationsPage } from './pages/NotificationsPage'
 import { FollowPage } from './pages/FollowPage'
@@ -50,12 +51,32 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route
+         <Route
           path="/profile/:username"
           element={
              <ProtectedRoute>
                <MainLayout>
                  <ProfilePage />
+               </MainLayout>
+             </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile/:username/followers"
+          element={
+             <ProtectedRoute>
+               <MainLayout>
+                 <ProfileFollowsPage />
+               </MainLayout>
+             </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile/:username/following"
+          element={
+             <ProtectedRoute>
+               <MainLayout>
+                 <ProfileFollowsPage />
                </MainLayout>
              </ProtectedRoute>
           }
