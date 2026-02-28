@@ -2,7 +2,9 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { LoginPage } from './pages/LoginPage'
 import { RegisterPage } from './pages/RegisterPage'
 import { HomePage } from './pages/HomePage'
+import { ProfilePage } from './pages/ProfilePage'
 import { useAuth } from './hooks/useAuth'
+import { MainLayout } from './components/layout/MainLayout'
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { user, isLoading } = useAuth()
@@ -38,8 +40,20 @@ function App() {
           path="/home"
           element={
             <ProtectedRoute>
-              <HomePage />
+              <MainLayout>
+                <HomePage />
+              </MainLayout>
             </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile/:username"
+          element={
+             <ProtectedRoute>
+               <MainLayout>
+                 <ProfilePage />
+               </MainLayout>
+             </ProtectedRoute>
           }
         />
         {/* Catch-all — redirect unknown paths to login */}

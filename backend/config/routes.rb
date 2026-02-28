@@ -19,7 +19,7 @@ Rails.application.routes.draw do
       resources :tweets, only: %i[create destroy]
       get :timeline, to: "timelines#index"
 
-      resources :users, only: [] do
+      resources :users, only: [:index, :show] do
         resource :follow, only: %i[create destroy]
         get :followers, to: "follows#followers"
         get :following, to: "follows#following"

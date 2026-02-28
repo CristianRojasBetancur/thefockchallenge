@@ -15,3 +15,9 @@ if user.banner.attached?
 else
   json.banner_url nil
 end
+
+if defined?(@current_user) && @current_user && @current_user.id != user.id
+  json.is_following @current_user.active_follows.exists?(followed_id: user.id)
+else
+  json.is_following false
+end

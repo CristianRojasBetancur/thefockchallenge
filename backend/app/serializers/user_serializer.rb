@@ -49,7 +49,8 @@ class UserSerializer
       tweets_count:     @user.tweets_count,
       avatar_url:       attachment_url(@user.avatar),
       banner_url:       attachment_url(@user.banner),
-      created_at:       @user.created_at
+      created_at:       @user.created_at,
+      is_following:     false # The profile owner cannot follow themselves
     }
   end
 
