@@ -28,6 +28,9 @@ Rails.application.routes.draw do
         collection do
           get :explore, to: "explore_users#index"
         end
+        member do
+          get :tweets, to: "user_tweets#index"
+        end
         resource :follow, only: %i[create destroy]
         get :followers, to: "follows#followers"
         get :following, to: "follows#following"

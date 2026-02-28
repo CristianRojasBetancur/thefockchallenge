@@ -71,3 +71,50 @@ paths:
                   $ref: "./partials/user.yml#/components/schemas/User"
         "401":
           $ref: "./partials/errors.yml#/components/responses/Unauthorized"
+  /api/v1/users/{id}/tweets:
+    get:
+      summary: Ver tweets de un usuario (User tweets)
+      description: |
+        Retorna la lista de tweets de un usuario específico de forma paginada.
+        El usuario puede ser buscado por su ID o username.
+
+        *Requiere autenticación.*
+      tags:
+        - Users
+        - Tweets
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID o username del usuario
+          schema:
+            type: string
+        - name: page
+          in: query
+          required: false
+          description: Número de página
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          required: false
+          description: Cantidad de resultados por página
+          schema:
+            type: integer
+            default: 20
+      responses:
+        "200":
+          description: Lista de tweets / Tweets list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "./partials/tweet.yml#/components/schemas/Tweet"
+        "401":
+          $ref: "./partials/errors.yml#/components/responses/Unauthorized"
+        "404":
+          $ref: "./partials/errors.yml#/components/responses/NotFound"
